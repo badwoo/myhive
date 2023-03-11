@@ -26,11 +26,10 @@ import org.apache.hadoop.io.NullWritable;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.google.common.collect.Iterators;
-
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Collections;
 /**
  * Record reader for results for Druid ScanQuery.
  */
@@ -43,8 +42,9 @@ public class DruidScanQueryRecordReader
 
   private ScanResultValue current;
 
-  private Iterator<List<Object>> compactedValues = Iterators.emptyIterator();
-
+  //private Iterator<List<Object>> compactedValues = Iterators.emptyIterator();
+  private Iterator<List<Object>> compactedValues = Collections.emptyIterator();
+//  private Iterator<List<Object>> compactedValues = ImmutableSet.<List<Object>>of().iterator();
   @Override
   protected JavaType getResultTypeDef() {
     return DruidStorageHandlerUtils.JSON_MAPPER.getTypeFactory().constructType(TYPE_REFERENCE);
@@ -98,4 +98,6 @@ public class DruidScanQueryRecordReader
     return queryResultsIterator.hasNext() || compactedValues.hasNext() ? 0 : 1;
   }
 
+  private class ImmutableSet {
+  }
 }

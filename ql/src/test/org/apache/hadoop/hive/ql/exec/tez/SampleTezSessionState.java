@@ -30,7 +30,7 @@ import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.shims.Utils;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.tez.dag.api.TezException;
-
+import com.google.common.util.concurrent.*;
 
 /**
  * This class is needed for writing junit tests. For testing the multi-session
@@ -128,7 +128,7 @@ public class SampleTezSessionState extends WmTezSession {
       public void onFailure(Throwable t) {
         future.setException(t);
       }
-    });
+    },MoreExecutors.directExecutor());
     return future;
   }
 
